@@ -195,13 +195,13 @@ async fn main(s: Spawner) {
     let display_spi = SpiDevice::new(spi_bus, display_cs);
     let dc = Output::new(p.P0_18, Level::Low, OutputDrive::Standard); // Data/clock
     let di = SPIInterface::new(display_spi, dc);
-    let mut display = mipidsi::Builder::new(mipidsi::models::ST7789, di)
+    let display = mipidsi::Builder::new(mipidsi::models::ST7789, di)
         .display_size(240, 240)
         .invert_colors(mipidsi::options::ColorInversion::Inverted)
         .reset_pin(rst)
+        .orientation(Orientation::new())
         .init(&mut Delay)
         .unwrap();
-    display.set_orientation(Orientation::new()).unwrap();
 
     backlight.set_high();
 
